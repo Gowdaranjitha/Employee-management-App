@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import Login from './Login/Login';
+import Dashboard from './Dashboard/Dashboard';
+import Registration from './Registration/Registration';
+import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 
 function App() {
+  const [loginData, setLoginData] = useState({});
+  const [registrationData, setRegistrationData] = useState({});
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="/" element={<Login setLoginData={setLoginData} />} />
+        <Route
+          path="/registration"
+          element={<Registration setRegistrationData={setRegistrationData} />}
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard
+              loginData={loginData}
+              registrationData={registrationData}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
