@@ -1,3 +1,4 @@
+// Registration.js
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -9,19 +10,29 @@ function Registration() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-
-    if (!username || !password|| !email) {
+    if (!username || !password || !email) {
       setError("All fields are required!");
       return;
     }
 
-    // Save user in localStorage
-    const user = { username, password, email };
-    localStorage.setItem("user", JSON.stringify(user));
+    try {
+      const res = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, email }),
+      });
 
-    navigate("/"); // go to login after registration
+      const data = await res.json();
+      if (res.ok) {
+        navigate("/"); // go to login after registration
+      } else {
+        throw new Error(data.error || "Registration failed");
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -62,9 +73,7 @@ function Registration() {
           />
         </Form.Group>
 
-        <Button type="submit" variant="success">
-          Register
-        </Button>
+        <Button type="submit" variant="success">Register</Button>
       </Form>
     </div>
   );

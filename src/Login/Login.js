@@ -1,3 +1,4 @@
+// Login.js
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -8,15 +9,26 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const savedUser = JSON.parse(localStorage.getItem("user"));
+    try {
+      const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (savedUser && username === savedUser.username && password === savedUser.password) {
-      navigate("/dashboard");
-    } else {
-      setError("Invalid credentials! Please try again.");
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("user", JSON.stringify(data));
+        navigate("/dashboard");
+      } else {
+        throw new Error(data.message || "Invalid credentials");
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -47,12 +59,13 @@ function Login() {
           />
         </Form.Group>
 
-        <Button type="submit" variant="primary">
-          Login
-        </Button>
+        <Button type="submit" variant="primary">Login</Button>
       </Form>
       <p className="mt-3">
-        Don't have an account? <span style={{color:'blue',cursor:'pointer'}} onClick={()=>navigate("/registration")}>Sign Up</span>
+        Don't have an account?{" "}
+        <span style={{ color: "blue", cursor: "pointer" }} onClick={() => navigate("/registration")}>
+          Sign Up
+        </span>
       </p>
     </div>
   );
