@@ -1,43 +1,35 @@
 import { useNavigate } from "react-router-dom";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Button, Container, Navbar, Nav } from "react-bootstrap";
 
-function Dashboard({ loginData, registrationData }) {
+function Dashboard() {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div>
-      {/* 🔹 Navigation Header */}
+      {/* Navbar */}
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand onClick={() => navigate("/")}>MyApp</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => navigate("/")}>Login</Nav.Link>
-            <Nav.Link onClick={() => navigate("/registration")}>
-              Registration
-            </Nav.Link>
+            <Nav.Link onClick={() => navigate("/registration")}>Register</Nav.Link>
             <Nav.Link onClick={() => navigate("/dashboard")}>Dashboard</Nav.Link>
           </Nav>
-          <Button variant="outline-light" onClick={() => navigate("/")}>
-            Logout
-          </Button>
+          <Button variant="outline-light" onClick={() => navigate("/")}>Logout</Button>
         </Container>
       </Navbar>
 
-      {/* 🔹 Dashboard Content */}
       <Container className="mt-4">
         <h2>Dashboard</h2>
-
-        <h3>Login Details</h3>
-        <p>Username: {loginData.username}</p>
-        <p>Password: {loginData.password}</p>
-
-        <h3>Registration Details</h3>
-        <p>Name: {registrationData.name}</p>
-        <p>Email: {registrationData.email}</p>
-
-        <Button variant="secondary" onClick={() => navigate("/registration")}>
-          ⬅ Back to Registration
-        </Button>
+        {user ? (
+          <>
+            <p><b>Username:</b> {user.username}</p>
+            <p><b>Email:</b> {user.email}</p>
+          </>
+        ) : (
+          <p>No user data found.</p>
+        )}
       </Container>
     </div>
   );
