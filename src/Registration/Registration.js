@@ -25,8 +25,8 @@ function Registration() {
       });
 
       const data = await res.json();
-      if (res.ok) {
-        navigate("/");
+      if (res.ok || res.status === 200) {
+        navigate("/"); // go to login page
       } else {
         throw new Error(data.error || "Registration failed");
       }
@@ -38,16 +38,15 @@ function Registration() {
   return (
     <div className="register-container">
       <div className="register-card">
-        <h2 className="title">Create Account</h2>
-        <p className="subtitle">Join us and get started today 🚀</p>
-
+        <h2>Create Account</h2>
         {error && <Alert variant="danger">{error}</Alert>}
-
         <Form onSubmit={handleRegister}>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
+              name="username"
+              autoComplete="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
@@ -59,6 +58,8 @@ function Registration() {
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
+              name="password"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
@@ -77,9 +78,7 @@ function Registration() {
             />
           </Form.Group>
 
-          <Button type="submit" className="register-btn">
-            Register
-          </Button>
+          <Button type="submit">Register</Button>
         </Form>
       </div>
     </div>

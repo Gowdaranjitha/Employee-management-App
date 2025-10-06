@@ -12,7 +12,6 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch("http://localhost:5000/login", {
         method: "POST",
@@ -21,7 +20,6 @@ function Login() {
       });
 
       const data = await res.json();
-
       if (res.ok) {
         localStorage.setItem("user", JSON.stringify(data));
         navigate("/dashboard");
@@ -36,23 +34,19 @@ function Login() {
   return (
     <div className="login-wrapper">
       <div className="login-card">
-        {/* Left Image */}
         <div className="login-card-left">
-          <img src={loginImg} alt="Login Screenshot" className="login-image" />
+          <img src={loginImg} alt="Login" className="login-image" />
         </div>
-
-        {/* Right Login Form */}
         <div className="login-card-right">
-          <h2 className="login-title">Welcome Back 👋</h2>
-          <p className="login-subtitle">Sign in to continue to your account</p>
-
+          <h2>Welcome Back 👋</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-
           <Form onSubmit={handleLogin}>
-            <Form.Group className="mb-3 text-start">
+            <Form.Group className="mb-3">
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
+                name="username"
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
@@ -60,10 +54,12 @@ function Login() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3 text-start">
+            <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
+                name="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
@@ -71,12 +67,9 @@ function Login() {
               />
             </Form.Group>
 
-            <Button type="submit" className="login-btn">
-              Login
-            </Button>
+            <Button type="submit">Login</Button>
           </Form>
-
-          <p className="signup-text">
+          <p>
             Don’t have an account?{" "}
             <span onClick={() => navigate("/registration")}>Sign Up</span>
           </p>
