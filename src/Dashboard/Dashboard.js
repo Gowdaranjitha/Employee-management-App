@@ -20,7 +20,7 @@ function Dashboard() {
       {/* Navbar */}
       <Navbar className="navbar-custom" expand="lg">
         <Container>
-          <Navbar.Brand onClick={() => navigate("/dashboard")}>✨ MyApp</Navbar.Brand>
+          <Navbar.Brand onClick={() => navigate("/dashboard")}>✨Employee App</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -42,17 +42,17 @@ function Dashboard() {
       {/* Welcome Banner */}
       <div className="welcome-banner">
         <h2>Welcome, {user ? user.username : "User"} 👋</h2>
-        <p>Manage your users and view registered members below</p>
+        <p>Manage employees and view registered employees below</p>
       </div>
 
       {/* Dashboard Content */}
       <Container className="dashboard-container">
         <div className="dashboard-card">
-          <h3 className="section-title">User List</h3>
+          <h3 className="section-title">Employee List</h3>
           <Table responsive bordered hover className="table-custom mt-3">
             <thead>
               <tr>
-                <th>#</th>
+                <th>No.</th>
                 <th>Username</th>
                 <th>Email</th>
               </tr>
@@ -68,7 +68,7 @@ function Dashboard() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="text-center text-muted">
+                  <td colSpan="10" className="text-center text-muted">
                     No users found.
                   </td>
                 </tr>
