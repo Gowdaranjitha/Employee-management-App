@@ -68,7 +68,7 @@ function Dashboard() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="10" className="text-center text-muted">
+                  <td colSpan="3" className="text-center text-muted">
                     No users found.
                   </td>
                 </tr>
