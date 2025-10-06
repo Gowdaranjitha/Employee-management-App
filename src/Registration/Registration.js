@@ -1,4 +1,4 @@
-// Registration.js
+import "./Registration.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert } from "react-bootstrap";
@@ -26,7 +26,7 @@ function Registration() {
 
       const data = await res.json();
       if (res.ok) {
-        navigate("/"); // go to login after registration
+        navigate("/");
       } else {
         throw new Error(data.error || "Registration failed");
       }
@@ -36,45 +36,52 @@ function Registration() {
   };
 
   return (
-    <div className="p-4">
-      <h2>Sign Up / Registration</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleRegister}>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter username"
-            required
-          />
-        </Form.Group>
+    <div className="register-container">
+      <div className="register-card">
+        <h2 className="title">Create Account</h2>
+        <p className="subtitle">Join us and get started today 🚀</p>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-            required
-          />
-        </Form.Group>
+        {error && <Alert variant="danger">{error}</Alert>}
 
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-            required
-          />
-        </Form.Group>
+        <Form onSubmit={handleRegister}>
+          <Form.Group className="mb-3">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+              required
+            />
+          </Form.Group>
 
-        <Button type="submit" variant="success">Register</Button>
-      </Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email"
+              required
+            />
+          </Form.Group>
+
+          <Button type="submit" className="register-btn">
+            Register
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 }

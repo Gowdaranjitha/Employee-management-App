@@ -1,0 +1,136 @@
+/* Page background */
+.dashboard-page {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+/* Navbar */
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideDown 0.8s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.navbar-custom .navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff !important;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.navbar-custom .nav-link {
+  color: #f1f1f1 !important;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #ffd6f6 !important;
+}
+
+.logout-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  border: 1px solid #fff;
+  transition: 0.3s;
+}
+.logout-btn:hover {
+  background: #fff;
+  color: #2575fc;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  text-align: center;
+  color: white;
+  padding: 60px 20px 30px;
+  animation: fadeIn 1s ease;
+}
+
+.welcome-banner h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.welcome-banner p {
+  font-size: 1rem;
+  color: #e0e0e0;
+  margin-top: 5px;
+}
+
+/* Dashboard Card */
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 30px;
+  width: 85%;
+  max-width: 900px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 1s ease;
+  margin-bottom: 60px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #4e54c8;
+  font-weight: 600;
+}
+
+/* Table Styling */
+.table-custom {
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.table-custom thead {
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.table-custom tbody tr {
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.table-custom tbody tr:hover {
+  background: #f4f2ff;
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(118, 75, 162, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-card {
+    width: 95%;
+    padding: 20px;
+  }
+  .welcome-banner h2 {
+    font-size: 1.6rem;
+  }
+}

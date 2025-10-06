@@ -1,7 +1,8 @@
-// Login.js
+import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert } from "react-bootstrap";
+import loginImg from "../assets/loginbg.png";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -33,40 +34,54 @@ function Login() {
   };
 
   return (
-    <div className="p-4">
-      <h2>Login</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleLogin}>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter username"
-            required
-          />
-        </Form.Group>
+    <div className="login-wrapper">
+      <div className="login-card">
+        {/* Left Image */}
+        <div className="login-card-left">
+          <img src={loginImg} alt="Login Screenshot" className="login-image" />
+        </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-            required
-          />
-        </Form.Group>
+        {/* Right Login Form */}
+        <div className="login-card-right">
+          <h2 className="login-title">Welcome Back 👋</h2>
+          <p className="login-subtitle">Sign in to continue to your account</p>
 
-        <Button type="submit" variant="primary">Login</Button>
-      </Form>
-      <p className="mt-3">
-        Don't have an account?{" "}
-        <span style={{ color: "blue", cursor: "pointer" }} onClick={() => navigate("/registration")}>
-          Sign Up
-        </span>
-      </p>
+          {error && <Alert variant="danger">{error}</Alert>}
+
+          <Form onSubmit={handleLogin}>
+            <Form.Group className="mb-3 text-start">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter username"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3 text-start">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+                required
+              />
+            </Form.Group>
+
+            <Button type="submit" className="login-btn">
+              Login
+            </Button>
+          </Form>
+
+          <p className="signup-text">
+            Don’t have an account?{" "}
+            <span onClick={() => navigate("/registration")}>Sign Up</span>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

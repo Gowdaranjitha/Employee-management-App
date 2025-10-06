@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Navbar, Nav, Table } from "react-bootstrap";
+import "./Dashboard.css";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -15,48 +16,66 @@ function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="dashboard-page">
       {/* Navbar */}
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar className="navbar-custom" expand="lg">
         <Container>
-          <Navbar.Brand onClick={() => navigate("/")}>MyApp</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link onClick={() => navigate("/")}>Login</Nav.Link>
-            <Nav.Link onClick={() => navigate("/registration")}>Register</Nav.Link>
-            <Nav.Link onClick={() => navigate("/dashboard")}>Dashboard</Nav.Link>
-          </Nav>
-          <Button variant="outline-light" onClick={() => navigate("/")}>
-            Logout
-          </Button>
+          <Navbar.Brand onClick={() => navigate("/dashboard")}>✨ MyApp</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link onClick={() => navigate("/")}>Login</Nav.Link>
+              <Nav.Link onClick={() => navigate("/registration")}>Register</Nav.Link>
+              <Nav.Link onClick={() => navigate("/dashboard")}>Dashboard</Nav.Link>
+            </Nav>
+            <Button
+              className="logout-btn"
+              variant="outline-light"
+              onClick={() => navigate("/")}
+            >
+              Logout
+            </Button>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <Container className="mt-4">
-        <h2>Dashboard</h2>
-        {user && (
-          <p>
-            <b>Logged in as:</b> {user.username} ({user.name})
-          </p>
-        )}
+      {/* Welcome Banner */}
+      <div className="welcome-banner">
+        <h2>Welcome, {user ? user.username : "User"} 👋</h2>
+        <p>Manage your users and view registered members below</p>
+      </div>
 
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Username</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u, index) => (
-              <tr key={u.id}>
-                <td>{index + 1}</td>
-                <td>{u.username}</td>
-                <td>{u.email}</td>
+      {/* Dashboard Content */}
+      <Container className="dashboard-container">
+        <div className="dashboard-card">
+          <h3 className="section-title">User List</h3>
+          <Table responsive bordered hover className="table-custom mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {users.length > 0 ? (
+                users.map((u, index) => (
+                  <tr key={u.id}>
+                    <td>{index + 1}</td>
+                    <td>{u.username}</td>
+                    <td>{u.email}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="text-center text-muted">
+                    No users found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
       </Container>
     </div>
   );

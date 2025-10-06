@@ -1,0 +1,101 @@
+/* Global Background */
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Card */
+.register-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  padding: 40px 35px;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #fff;
+  animation: fadeIn 1s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Title and Subtitle */
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.subtitle {
+  font-size: 14px;
+  color: #ddd;
+  margin-bottom: 25px;
+}
+
+/* Form Fields */
+.form-label {
+  color: #f1f1f1;
+  text-align: left;
+  display: block;
+}
+.form-control {
+  border-radius: 10px;
+  border: none;
+  padding: 12px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 10px #764ba2;
+}
+
+/* Button */
+.register-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.register-btn:hover {
+  background: linear-gradient(90deg, #764ba2, #667eea);
+  transform: scale(1.03);
+}
+
+/* Error Alert */
+.alert-danger {
+  background-color: rgba(255, 99, 99, 0.8);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* Placeholder Styling */
+.form-control::placeholder {
+  color: #aaa;
+}
