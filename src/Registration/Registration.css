@@ -93,12 +93,12 @@ body {
   padding: 12px;
   font-size: 16px;
   font-weight: 600;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #4d5b9b, #764ba2);
   color: #fff;
   transition: all 0.3s ease;
 }
 .register-btn:hover {
-  background: linear-gradient(90deg, #764ba2, #667eea);
+  background: linear-gradient(90deg, #764ba2, #4c5992);
   transform: scale(1.03);
   box-shadow: 0 0 15px rgba(118, 75, 162, 0.5);
 }
@@ -120,7 +120,7 @@ body {
   color: #ddd;
 }
 .signup-text span {
-  color: #7fafff;
+  color: #4c638a;
   font-weight: 600;
   cursor: pointer;
   transition: color 0.3s;
