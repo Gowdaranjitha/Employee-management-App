@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "first_name": "Helene",
+        "last_name": "Sabathe",
+        "email": "hsabathe0@flavors.me",
+        "gender": "Female"
+    },
+    {
+        "id": 2,
+        "first_name": "Rollo",
+        "last_name": "Cale",
+        "email": "rcale1@ucoz.com",
+        "gender": "Male"
+    },
+    {
+        "id": 3,
+        "first_name": "Cathryn",
+        "last_name": "Yellep",
+        "email": "cyellep2@sogou.com",
+        "gender": "Female"
+    },
+    {
+        "id": 4,
+        "first_name": "Chris",
+        "last_name": "McCarrick",
+        "email": "cmccarrick3@nydailynews.com",
+        "gender": "Male"
+    },
+    {
+        "id": 5,
+        "first_name": "Bail",
+        "last_name": "Bohling",
+        "email": "bbohling4@rediff.com",
+        "gender": "Polygender"
+    },
+    {
+        "id": 6,
+        "first_name": "Tammy",
+        "last_name": "Roland",
+        "email": "troland5@4shared.com",
+        "gender": "Polygender"
+    },
+    {
+        "id": 7,
+        "first_name": "Ricky",
+        "last_name": "Yeoman",
+        "email": "ryeoman6@wix.com",
+        "gender": "Male"
+    },
+    {
+        "id": 8,
+        "first_name": "Terri",
+        "last_name": "Haggett",
+        "email": "thaggett7@e-recht24.de",
+        "gender": "Polygender"
+    },
+    {
+        "id": 9,
+        "first_name": "Kassia",
+        "last_name": "Greatrex",
+        "email": "kgreatrex8@furl.net",
+        "gender": "Female"
+    },
+    {
+        "id": 10,
+        "first_name": "Nels",
+        "last_name": "Ranahan",
+        "email": "nranahan9@opensource.org",
+        "gender": "Male"
+    }
+]

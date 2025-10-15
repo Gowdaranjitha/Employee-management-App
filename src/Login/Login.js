@@ -1,8 +1,7 @@
-import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Alert } from "react-bootstrap";
-import loginImg from "../assets/loginbg.png";
+import "./Login.css";
+import loginBg from "../assets/loginbg.png"; 
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -12,68 +11,68 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!username || !password) {
+      setError("All fields are required");
+      return;
+    }
+
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
-      if (res.ok) {
-        localStorage.setItem("user", JSON.stringify(data));
-        navigate("/dashboard");
-      } else {
-        throw new Error(data.message || "Invalid credentials");
+
+      if (!res.ok) {
+        setError(data.message || "Invalid username or password");
+        return;
       }
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.message);
+      console.error(err);
+      setError("Server error. Please try again later.");
     }
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-card">
-        <div className="login-card-left">
-          <img src={loginImg} alt="Login" className="login-image" />
-        </div>
-        <div className="login-card-right">
-          <h2>Welcome Back 👋</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleLogin}>
-            <Form.Group className="mb-3">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                name="username"
-                autoComplete="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username"
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
-                required
-              />
-            </Form.Group>
-
-            <Button type="submit">Login</Button>
-          </Form>
-          <p>
-            Don’t have an account?{" "}
-            <span onClick={() => navigate("/registration")}>Sign Up</span>
-          </p>
-        </div>
+    <div
+      className="login-container"
+      style={{
+        backgroundImage: `url(${loginBg})`,
+      }}
+    >
+      <div className="login-overlay" />
+      <div className="login-box">
+        <h2>Welcome Back 👋</h2>
+        <p className="subtitle">Login to continue your journey</p>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+        </form>
+        <p className="register-text">
+          Don’t have an account?{" "}
+          <span className="link" onClick={() => navigate("/register")}>
+            Register
+          </span>
+        </p>
       </div>
     </div>
   );

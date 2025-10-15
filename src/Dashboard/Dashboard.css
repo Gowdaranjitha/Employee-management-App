@@ -1,139 +1,195 @@
-/* Layout */
-.dashboard-layout {
+/* ==============================
+   Full-screen layout with gradient and glass overlay
+   ============================== */
+.dashboard-container {
   display: flex;
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(135deg, #1f1c2c, #928dab);
-  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #2a1b51, #4c6499);
+  position: relative;
+  overflow: hidden;
   color: #fff;
 }
 
-/* Sidebar */
+/* Subtle overlay for glass effect */
+.dashboard-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  z-index: 0;
+}
+
+/* ==============================
+   Sidebar
+   ============================== */
 .sidebar {
-  width: 250px;
-  background: rgba(0, 0, 0, 0.146);
-  backdrop-filter: blur(10px);
+  width: 260px;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.12); /* glass effect */
+  backdrop-filter: blur(14px);
+  padding: 45px 25px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0 25px 25px 0;
+  box-shadow: 6px 0 35px rgba(0, 0, 0, 0.18);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.sidebar h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #fdfcff;
+  letter-spacing: 0.5px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 18px 0;
+  padding: 14px 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e4dff7;
+  font-weight: 500;
+  transition: all 0.35s ease;
+}
+
+.sidebar ul li:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  transform: translateX(6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ==============================
+   Dashboard content
+   ============================== */
+.dashboard-content {
+  flex: 1;
+  padding: 55px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 30px 20px;
-  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  gap: 35px;
+  position: relative;
+  z-index: 1;
 }
 
-.sidebar-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 40px;
+/* ==============================
+   Welcome card
+   ============================== */
+.welcome-card {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 25px;
+  padding: 35px;
   text-align: center;
-}
-
-.sidebar-btn {
-  width: 100%;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  color: #fff;
-  font-weight: 600;
-  padding: 10px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
   transition: all 0.3s ease;
 }
 
-.sidebar-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(118, 75, 162, 0.5);
+.welcome-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.22);
 }
 
-.sidebar-btn.active {
-  background: linear-gradient(90deg, #764ba2, #667eea);
-}
-
-.logout-btn {
-  margin-top: auto;
-  width: 100%;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #ff6a6a35, #e34b4b);
-  border: none;
-  color: #fff;
-  font-weight: 600;
-  padding: 10px;
-  transition: all 0.3s ease;
-}
-
-.logout-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 90, 90, 0.112);
-}
-
-/* Main Content */
-.main-content {
-  flex: 1;
-  padding: 40px 60px;
-  overflow-y: auto;
-}
-
-.welcome-banner {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.welcome-banner h2 {
-  font-size: 28px;
+.welcome-card h1 {
+  font-size: 30px;
   font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-.welcome-banner p {
+.welcome-card p {
   font-size: 16px;
-  color: #e0e0e0;
+  color: #dcd2f0;
 }
 
-.dashboard-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+/* ==============================
+   Table card
+   ============================== */
+.table-card {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 28px;
+  border-radius: 25px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+  overflow-x: auto;
+  transition: all 0.3s ease;
 }
 
-/* Table */
-.custom-table {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  overflow: hidden;
+.table-card:hover {
+  transform: translateY(-3px);
 }
 
-.custom-table thead th {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-weight: 600;
+/* ==============================
+   Users table
+   ============================== */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #ece2ff;
 }
 
-.custom-table tbody tr:hover {
+.users-table th,
+.users-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.users-table th {
   background: rgba(255, 255, 255, 0.2);
-  transition: background 0.3s ease;
+  font-weight: 600;
+  font-size: 15px;
 }
 
-/* Responsive */
+.users-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.users-table tr:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+}
+
+/* Highlight logged-in user */
+.users-table .highlight {
+  background: rgba(255, 255, 255, 0.25);
+  color: #a77fff;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* ==============================
+   Responsive Design
+   ============================== */
 @media (max-width: 768px) {
-  .dashboard-layout {
+  .dashboard-container {
     flex-direction: column;
   }
 
   .sidebar {
-    flex-direction: row;
-    justify-content: space-around;
     width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 25px 25px;
+    text-align: center;
+    padding: 25px 15px;
   }
 
-  .main-content {
-    padding: 20px;
+  .dashboard-content {
+    padding: 30px 20px;
   }
 
-  .sidebar-title {
-    display: none;
+  .users-table th,
+  .users-table td {
+    font-size: 14px;
   }
 }

@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -9,80 +8,55 @@ function Dashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch("http://localhost:5000/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error fetching users:", err));
   }, []);
 
-  return (
-    <div className="dashboard-layout">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2 className="sidebar-title">✨ Employee App</h2>
-        <Button className="sidebar-btn" onClick={() => navigate("/")}>
-          Login
-        </Button>
-        <Button
-          className="sidebar-btn"
-          onClick={() => navigate("/registration")}
-        >
-          Register
-        </Button>
-        <Button
-          className="sidebar-btn active"
-          onClick={() => navigate("/dashboard")}
-        >
-          Dashboard
-        </Button>
-        <Button
-          className="logout-btn mt-auto"
-          onClick={() => {
-            localStorage.removeItem("user");
-            navigate("/");
-          }}
-        >
-          Logout
-        </Button>
-      </div>
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
-      {/* Main Content */}
-      <div className="main-content">
-        <div className="welcome-banner">
-          <h2>Welcome, {user ? user.username : "User"} 👋</h2>
-          <p>Manage employees and view registered users below</p>
+  return (
+    <div className="dashboard-container">
+      <aside className="sidebar">
+        <h2>✨ Dashboard</h2>
+        <ul>
+          <li onClick={() => navigate("/dashboard")}>Home</li>
+          <li onClick={handleLogout}>Logout</li>
+        </ul>
+      </aside>
+
+      <main className="dashboard-content">
+        <div className="welcome-card">
+          <h1>Welcome, {user ? user.username : "User"} 👋</h1>
+          <p>Here’s a list of all registered users:</p>
         </div>
 
-        <div className="dashboard-card">
-          <h3 className="section-title">Registered Users</h3>
-          <Table striped bordered hover responsive className="custom-table">
+        <div className="table-card">
+          <table className="users-table">
             <thead>
               <tr>
-                <th>No</th>
+                <th>ID</th>
                 <th>Username</th>
-                <th>Email</th>
               </tr>
             </thead>
             <tbody>
-              {users.length > 0 ? (
-                users.map((u, i) => (
-                  <tr key={u.id}>
-                    <td>{i + 1}</td>
-                    <td>{u.username}</td>
-                    <td>{u.email}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3" className="text-center">
-                    No users found.
-                  </td>
+              {users.map((u) => (
+                <tr
+                  key={u.id}
+                  className={user && user.id === u.id ? "highlight" : ""}
+                >
+                  <td>{u.id}</td>
+                  <td>{u.username}</td>
                 </tr>
-              )}
+              ))}
             </tbody>
-          </Table>
+          </table>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
