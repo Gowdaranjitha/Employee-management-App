@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Registration.css";
-import loginBg from "../assets/loginbg.png"; 
+import loginBg from "../assets/loginbg.png";
 
 function Registration() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [department, setDepartment] = useState("");
+  const [role, setRole] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -15,7 +18,7 @@ function Registration() {
     setError("");
     setSuccess("");
 
-    if (!username || !password) {
+    if (!username || !password || !email || !department || !role) {
       setError("All fields are required");
       return;
     }
@@ -24,7 +27,7 @@ function Registration() {
       const res = await fetch("http://localhost:5000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, email, department, role }),
       });
 
       const data = await res.json();
@@ -44,10 +47,10 @@ function Registration() {
   };
 
   return (
-    <div className="register-container"
-      style={{
-        backgroundImage: `url(${loginBg})`,
-      }}>
+    <div
+      className="register-container"
+      style={{ backgroundImage: `url(${loginBg})` }}
+    >
       <div className="register-overlay" />
       <div className="register-box">
         <h2>Create Account ✨</h2>
@@ -68,6 +71,24 @@ function Registration() {
             placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Department"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
           />
           <button type="submit">Register</button>
         </form>

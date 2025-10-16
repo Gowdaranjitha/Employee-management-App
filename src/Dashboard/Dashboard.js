@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
+import dashboardBg from "../assets/dashboardbg.png";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -19,8 +20,22 @@ function Dashboard() {
     navigate("/login");
   };
 
+  if (!user) {
+    navigate("/login");
+    return null;
+  }
+
   return (
-    <div className="dashboard-container">
+    <div
+      className="dashboard-container"
+      style={{
+        backgroundImage: `linear-gradient(rgba(42,27,81,0.6), rgba(76,100,153,0.6)), url(${dashboardBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="dashboard-overlay" />
+
       <aside className="sidebar">
         <h2>✨ Dashboard</h2>
         <ul>
@@ -31,7 +46,7 @@ function Dashboard() {
 
       <main className="dashboard-content">
         <div className="welcome-card">
-          <h1>Welcome, {user ? user.username : "User"} 👋</h1>
+          <h1>Welcome, {user.username} 👋</h1>
           <p>Here’s a list of all registered users:</p>
         </div>
 
@@ -41,16 +56,22 @@ function Dashboard() {
               <tr>
                 <th>ID</th>
                 <th>Username</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Role</th>
               </tr>
             </thead>
             <tbody>
               {users.map((u) => (
                 <tr
                   key={u.id}
-                  className={user && user.id === u.id ? "highlight" : ""}
+                  className={user.id === u.id ? "highlight" : ""}
                 >
                   <td>{u.id}</td>
                   <td>{u.username}</td>
+                  <td>{u.email}</td>
+                  <td>{u.department}</td>
+                  <td>{u.role}</td>
                 </tr>
               ))}
             </tbody>

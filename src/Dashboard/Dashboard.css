@@ -1,21 +1,25 @@
 /* ==============================
-   Full-screen layout with gradient and glass overlay
+   Full-screen layout with gradient + background image + glass overlay
    ============================== */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #2a1b51, #4c6499);
   position: relative;
   overflow: hidden;
   color: #fff;
+
+  /* Background image with gradient overlay */
+  background: linear-gradient(135deg, rgba(89, 73, 132, 0.6), rgba(76,100,153,0.6)),
+              url('../assets/dashboardbg.png') no-repeat center center;
+  background-size: cover;
 }
 
-/* Subtle overlay for glass effect */
+/* Glass overlay */
 .dashboard-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(56, 14, 14, 0.06);
   backdrop-filter: blur(8px);
   z-index: 0;
 }
@@ -41,7 +45,7 @@
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 50px;
-  color: #fdfcff;
+  color: #fff;
   letter-spacing: 0.5px;
 }
 
@@ -56,16 +60,16 @@
   border-radius: 15px;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.08);
-  color: #e4dff7;
+  color: #fff;
   font-weight: 500;
   transition: all 0.35s ease;
 }
 
 .sidebar ul li:hover {
   background: rgba(255, 255, 255, 0.25);
-  color: #fff;
   transform: translateX(6px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #fff;
 }
 
 /* ==============================
@@ -163,7 +167,7 @@
 /* Highlight logged-in user */
 .users-table .highlight {
   background: rgba(255, 255, 255, 0.25);
-  color: #a77fff;
+  color: #3b3449;
   font-weight: 600;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
   border-radius: 10px;

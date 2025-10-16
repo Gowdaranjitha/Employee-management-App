@@ -2,11 +2,15 @@ const db = require("../config/db");
 
 const User = {
   getAll: (callback) => {
-    db.query("SELECT id, username FROM users", callback);
+    db.query("SELECT id, username, email, department, role FROM users", callback);
   },
 
   getById: (id, callback) => {
-    db.query("SELECT id, username FROM users WHERE id = ?", [id], callback);
+    db.query("SELECT id, username, email, department, role FROM users WHERE id = ?", [id], callback);
+  },
+
+  getByEmail: (email, callback) => {
+    db.query("SELECT * FROM users WHERE email = ?", [email], callback);
   },
 
   getByUsername: (username, callback) => {
@@ -14,19 +18,19 @@ const User = {
   },
 
   create: (user, callback) => {
-    const { username, password } = user;
+    const { username, email, password, department, role } = user;
     db.query(
-      "INSERT INTO users (username, password) VALUES (?, ?)",
-      [username, password],
+      "INSERT INTO users (username, email, password, department, role) VALUES (?, ?, ?, ?, ?)",
+      [username, email, password, department, role],
       callback
     );
   },
 
   update: (id, user, callback) => {
-    const { username, password } = user;
+    const { username, email, password, department, role } = user;
     db.query(
-      "UPDATE users SET username=?, password=? WHERE id=?",
-      [username, password, id],
+      "UPDATE users SET username=?, email=?, password=?, department=?, role=? WHERE id=?",
+      [username, email, password, department, role, id],
       callback
     );
   },

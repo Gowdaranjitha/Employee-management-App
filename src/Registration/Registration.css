@@ -2,7 +2,7 @@
 .register-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   height: 100vh;
   background: linear-gradient(135deg, #72579c, #4c6499); 
   background-size: cover;
@@ -16,7 +16,7 @@
 .register-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(6px);
   z-index: 0;
 }
@@ -25,13 +25,13 @@
 .register-box {
   position: relative;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.75); /* soft glass */
-  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
   padding: 50px 40px;
-  width: 380px;
+  width: 370px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   text-align: center;
-  color: #333;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  color: white;
   backdrop-filter: blur(15px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

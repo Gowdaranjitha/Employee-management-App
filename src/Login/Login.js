@@ -43,15 +43,14 @@ function Login() {
   return (
     <div
       className="login-container"
-      style={{
-        backgroundImage: `url(${loginBg})`,
-      }}
+      style={{ backgroundImage: `url(${loginBg})` }}
     >
       <div className="login-overlay" />
       <div className="login-box">
         <h2>Welcome Back 👋</h2>
         <p className="subtitle">Login to continue your journey</p>
         {error && <p className="error">{error}</p>}
+
         <form onSubmit={handleLogin}>
           <input
             type="text"
@@ -67,6 +66,7 @@ function Login() {
           />
           <button type="submit">Login</button>
         </form>
+
         <p className="register-text">
           Don’t have an account?{" "}
           <span className="link" onClick={() => navigate("/register")}>
