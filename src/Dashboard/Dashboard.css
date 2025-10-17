@@ -18,7 +18,7 @@
 /* Glass overlay */
 .dashboard-overlay {
   position: absolute;
-  inset: 0;
+  inset: 1;
   background: rgba(56, 14, 14, 0.06);
   backdrop-filter: blur(8px);
   z-index: 0;

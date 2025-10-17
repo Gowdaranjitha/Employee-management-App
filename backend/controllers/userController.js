@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
+const db = require("../config/db"); 
 
 const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
@@ -128,5 +129,42 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     }
 
     res.json({ message: "User deleted successfully" });
+  });
+});
+
+// PATCH - Partially update user (only provided fields)
+// PATCH - Partially update user (only provided fields)
+exports.patchUser = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const updates = req.body;
+
+  if (!updates || Object.keys(updates).length === 0) {
+    return res.status(400).json({ message: "No fields provided for update" });
+  }
+
+  // If password is provided, hash it before updating
+  if (updates.password) {
+    updates.password = await bcrypt.hash(updates.password, 10);
+  }
+
+  // Build dynamic query
+  const fields = Object.keys(updates)
+    .map((key) => `${key} = ?`)
+    .join(", ");
+  const values = Object.values(updates);
+  values.push(id);
+
+  const sql = `UPDATE users SET ${fields} WHERE id = ?`;
+
+  db.query(sql, values, (err, result) => { 
+    if (err) {
+      console.error("DB Error (patchUser):", err);
+      return res.status(500).json({ message: "Server error" });
+    }
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "User updated successfully (PATCH)" });
   });
 });

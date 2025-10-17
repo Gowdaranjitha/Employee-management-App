@@ -15,8 +15,8 @@
 /* Overlay for subtle glass effect */
 .register-overlay {
   position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.1);
+  inset: 1;
+  background: rgba(160, 133, 133, 0.1);
   backdrop-filter: blur(6px);
   z-index: 0;
 }

@@ -14,8 +14,8 @@
 
 .login-overlay {
   position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.1);
+  inset: 1;
+  background: rgba(146, 123, 123, 0.1);
   backdrop-filter: blur(6px);
   z-index: 0;
 }
