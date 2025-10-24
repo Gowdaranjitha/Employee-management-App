@@ -197,3 +197,33 @@
     font-size: 14px;
   }
 }
+/* Base button style */
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Update button (green) */
+.btn-update {
+  background-color: #7d9c7e;
+}
+
+.btn-update:hover {
+  background-color: #829182;
+}
+
+/* Delete button (red) */
+.btn-delete {
+  background-color: #726a62;
+  margin-left: 8px; /* spacing between buttons */
+}
+
+.btn-delete:hover {
+  background-color: #9f846c;
+}
+

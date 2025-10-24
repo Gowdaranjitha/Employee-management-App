@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import loginBg from "../assets/loginbg.png"; 
+import loginBg from "../assets/loginbg.png";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    if (!username || !password) {
+    if (!email.trim() || !password.trim()) {
       setError("All fields are required");
       return;
     }
@@ -22,16 +22,17 @@ function Login() {
       const res = await fetch("http://localhost:5000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Invalid username or password");
+        setError(data.message || "Invalid email or password");
         return;
       }
 
+      // Store logged-in user in localStorage
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     } catch (err) {
@@ -53,17 +54,19 @@ function Login() {
 
         <form onSubmit={handleLogin}>
           <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
+
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
           <button type="submit">Login</button>
         </form>
 

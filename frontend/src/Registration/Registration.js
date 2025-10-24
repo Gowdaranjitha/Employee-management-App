@@ -32,14 +32,14 @@ function Registration() {
 
       const data = await res.json();
 
-      if (!res.ok) {
+      if (!res.ok) {//boolean property of the Response object.checks if HTTP request was unsuccessful.
         setError(data.message || "Registration failed");
         return;
       }
 
       setSuccess("Registration successful! Redirecting...");
       localStorage.setItem("user", JSON.stringify(data.user));
-      setTimeout(() => navigate("/dashboard"), 1500);
+      setTimeout(() => navigate("/dashboard"), 1500);//waits 1.5 seconds before running navigate showings success message
     } catch (err) {
       console.error(err);
       setError("Server error. Please try again later.");
