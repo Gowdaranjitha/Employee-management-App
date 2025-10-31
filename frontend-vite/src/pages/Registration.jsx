@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Registration.css";
 import loginBg from "../assets/loginbg.png";
+import API from "../api/axiosConfig";
 
 function Registration() {
   const [username, setUsername] = useState("");
@@ -24,25 +25,13 @@ function Registration() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, email, department, role }),
-      });
+      await API.post("/users", { username, password, email, department, role });
 
-      const data = await res.json();
-
-      if (!res.ok) {//boolean property of the Response object.checks if HTTP request was unsuccessful.
-        setError(data.message || "Registration failed");
-        return;
-      }
-
-      setSuccess("Registration successful! Redirecting...");
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setTimeout(() => navigate("/dashboard"), 1500);//waits 1.5 seconds before running navigate showings success message
+      setSuccess("Registration successful! Redirecting to Login...");
+      setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      console.error(err);
-      setError("Server error. Please try again later.");
+      console.error("Error:", err);
+      setError(err.response?.data?.message || "Server error. Please try again.");
     }
   };
 
@@ -86,7 +75,7 @@ function Registration() {
           />
           <input
             type="text"
-            placeholder="Role"
+            placeholder="Role (Admin / Manager / Employee)"
             value={role}
             onChange={(e) => setRole(e.target.value)}
           />

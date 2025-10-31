@@ -1,66 +1,179 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
-const asyncHandler = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+//Generate JWT Token
+const generateToken = (user) => {
+  return jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+};
 
-exports.getAllUsers = asyncHandler(async (req, res) => {
-  User.getAll((err, results) => err ? res.status(500).json({ message: "Server error" }) : res.json(results));
-});
+//Register / Create User
+exports.createUser = async (req, res) => {
+  try {
+    const { username, email, password, role, department } = req.body;
 
-exports.getUserById = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  User.getById(id, (err, results) => {
-    if (err) return res.status(500).json({ message: "Server error" });
-    if (!results || results.length === 0) return res.status(404).json({ message: "User not found" });
-    res.json(results[0]);
-  });
-});
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
 
-exports.createUser = asyncHandler(async (req, res) => {
-  const { username, email, password, department, role } = req.body;
-  if (!username || !email || !password || !department) return res.status(400).json({ message: "All required fields must be filled" });
-
-  User.getByEmail(email, async (err, results) => {
-    if (err) return res.status(500).json({ message: "Server error" });
-    if (results.length > 0) return res.status(400).json({ message: "Email already exists" });
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ message: "Email already registered" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = { username, email, password: hashedPassword, department, role };
-    User.create(newUser, (err, result) => {
-      if (err) return res.status(500).json({ message: "Server error" });
-      res.status(201).json({ message: "User registered successfully", user: { id: result.insertId, username, email, department, role } });
+
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      department,
+      role: role || "Employee",
     });
-  });
-});
 
-exports.loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ message: "All fields are required" });
+    await newUser.save();
+    res.status(201).json({ message: "User created successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating user", error: err.message });
+  }
+};
 
-  User.getByEmail(email, async (err, results) => {
-    if (err) return res.status(500).json({ message: "Server error" });
-    if (!results || results.length === 0) return res.status(401).json({ message: "Invalid credentials" });
+//Login User
+exports.loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-    const user = results[0];
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(401).json({ message: "Invalid credentials" });
+
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(401).json({ message: "Invalid credentials" });
 
-    res.json({ message: "Login successful", user: { id: user.id, username: user.username, email: user.email, department: user.department, role: user.role } });
-  });
-});
+    const token = generateToken(user);
 
-exports.updateUser = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  const updates = req.body;
-  if (!updates || Object.keys(updates).length === 0) return res.status(400).json({ message: "No fields provided to update" });
+    res.json({
+      message: "Login successful",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error logging in", error: err.message });
+  }
+};
 
-  if (updates.password && updates.password.trim() !== "") updates.password = await bcrypt.hash(updates.password, 10);
-  else delete updates.password;
+//Get All Users (Admin only)
+exports.getAllUsers = async (req, res) => {
+  try {
+    const { role, id } = req.user; // extracted from JWT token
 
-  User.update(id, updates, err => err ? res.status(500).json({ message: "Server error" }) : res.json({ message: "User updated successfully" }));
-});
+    let users;
 
-exports.deleteUser = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  User.delete(id, err => err ? res.status(500).json({ message: "Server error" }) : res.json({ message: "User deleted successfully" }));
-});
+    if (role === "Admin") {
+      // ✅ Admin: Can view everyone
+      users = await User.find({}, "username email department role createdAt");
+    } else if (role === "Manager") {
+      // ✅ Manager: Can view everyone (read-only)
+      users = await User.find({}, "username email department role createdAt");
+    } else if (role === "Employee") {
+      // ✅ Employee: Can view only self
+      users = await User.find({ _id: id }, "username email department role createdAt");
+    }
+
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching users", error: err.message });
+  }
+};
+
+
+//Get Single User (Admin, Manager, Employee)
+exports.getUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching user", error: err.message });
+  }
+};
+
+//Update User (with role change logic)
+exports.updateUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { username, email, password, role, department } = req.body;
+    const { id: requesterId, role: requesterRole } = req.user;
+
+    const existingUser = await User.findById(userId);
+    if (!existingUser) return res.status(404).json({ message: "User not found" });
+
+    //Role change logic
+    let newRole = existingUser.role;
+    if (role) {
+      if (requesterRole === "Admin") {
+        newRole = role; // Admin can change anyone’s role
+      } else if (["Manager", "Employee"].includes(requesterRole)) {
+        if (requesterId === userId) {
+          newRole = role; // Can change own role only
+        } else {
+          return res.status(403).json({ message: "Access Denied: You can only modify your own role" });
+        }
+      }
+    }
+
+    //Restrict updates: Non-admins can only update themselves
+    if (requesterRole !== "Admin" && requesterId !== userId) {
+      return res.status(403).json({ message: "Access Denied: You can update only your own data" });
+    }
+
+    //Hash password if changed
+    let hashedPassword = existingUser.password;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
+    existingUser.username = username || existingUser.username;
+    existingUser.email = email || existingUser.email;
+    existingUser.password = hashedPassword;
+    existingUser.role = newRole;
+    existingUser.department = department || existingUser.department;
+
+    await existingUser.save();
+
+    res.json({ message: "User updated successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error updating user", error: err.message });
+  }
+};
+
+//Delete User
+exports.deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { id: requesterId, role: requesterRole } = req.user;
+
+    // Admin can delete anyone, others only themselves
+    if (requesterRole !== "Admin" && requesterId !== userId) {
+      return res.status(403).json({ message: "Access Denied: You can delete only your own profile" });
+    }
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting user", error: err.message });
+  }
+};

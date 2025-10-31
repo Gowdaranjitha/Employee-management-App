@@ -1,21 +1,22 @@
-const db = require("../config/db");
+const mongoose = require("mongoose");
 
-const User = {
-  getAll: (callback) => db.query("SELECT id, username, email, department, role FROM users", callback),
-  getById: (id, callback) => db.query("SELECT id, username, email, department, role FROM users WHERE id = ?", [id], callback),
-  getByEmail: (email, callback) => db.query("SELECT * FROM users WHERE email = ?", [email], callback),
-  create: (user, callback) => {
-    const { username, email, password, department, role } = user;
-    db.query("INSERT INTO users (username, email, password, department, role) VALUES (?, ?, ?, ?, ?)",
-      [username, email, password, department, role], callback);
+const userSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, lowercase: true },
+    password: { type: String, required: true },
+    department: { type: String, default: "" },
+    role: {
+      type: String,
+      enum: ["Admin", "Manager", "Employee"],
+      required: true,
+      default: "Employee",
+    },
   },
-  update: (id, userData, callback) => {
-    const fields = Object.keys(userData).map(key => `${key} = ?`).join(", ");
-    const values = Object.values(userData);
-    values.push(id);
-    db.query(`UPDATE users SET ${fields} WHERE id = ?`, values, callback);
-  },
-  delete: (id, callback) => db.query("DELETE FROM users WHERE id=?", [id], callback),
-};
+  { timestamps: true }
+);
+
+// ✅ use correct model + collection name
+const User = mongoose.model("user", userSchema, "users");
 
 module.exports = User;

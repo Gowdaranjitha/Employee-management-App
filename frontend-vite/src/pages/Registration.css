@@ -1,0 +1,108 @@
+/* ---------------------------
+   REGISTER PAGE - Clean Glass Style
+---------------------------- */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100vw;
+  background: radial-gradient(circle at center, #2575fc 0%, #6a11cb 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  padding-top: 5px; /* for navbar space if fixed */
+  position: fixed;
+}
+
+.register-box {
+  width: 400px;
+  padding: 45px 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.register-box h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus {
+  background: #fff;
+  box-shadow: 0 0 6px #8e2de2;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2d6985, #2c5263);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Login Link */
+.login-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #eee;
+}
+
+.link {
+  color: #c7b3ff;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import API from "../api/axiosConfig";
 import loginBg from "../assets/loginbg.png";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,31 +14,23 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    if (!email.trim() || !password.trim()) {
-      setError("All fields are required");
-      return;
-    }
-
     try {
-      const res = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await API.post("/users/login", { email, password });
+      const { user, token } = res.data;
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Invalid email or password");
+      if (!user || !token) {
+        setError("Invalid response from server");
         return;
       }
 
-      // Store logged-in user in localStorage
-      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      console.log("Login successful");
       navigate("/dashboard");
     } catch (err) {
-      console.error(err);
-      setError("Server error. Please try again later.");
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || "Invalid credentials");
     }
   };
 
@@ -46,27 +39,27 @@ function Login() {
       className="login-container"
       style={{ backgroundImage: `url(${loginBg})` }}
     >
-      <div className="login-overlay" />
       <div className="login-box">
         <h2>Welcome Back 👋</h2>
-        <p className="subtitle">Login to continue your journey</p>
+        <p className="subtitle">Login to continue</p>
+
         {error && <p className="error">{error}</p>}
 
         <form onSubmit={handleLogin}>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
-
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-
           <button type="submit">Login</button>
         </form>
 
