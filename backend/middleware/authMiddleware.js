@@ -24,10 +24,10 @@ exports.authorizeRoles = (...allowedRoles) => {
     const { role, id } = req.user;
     const targetId = req.params.id;
 
-    // ✅ Admin → full access
+    //  Admin → full access
     if (role === "Admin") return next();
 
-    // ✅ Manager
+    //  Manager
     if (role === "Manager") {
       if (req.method === "GET") return next(); // can view all
       if (["PATCH", "PUT", "DELETE"].includes(req.method)) {
@@ -39,7 +39,7 @@ exports.authorizeRoles = (...allowedRoles) => {
       return next();
     }
 
-    // ✅ Employee
+    //  Employee
     if (role === "Employee") {
       if (req.method === "GET") {
         if (!targetId || targetId === id) return next(); // allow own data

@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h2 className="navbar-title">Employee Registration App</h2>
+      <h2 className="navbar-title">****************** //\\ Employee Management App //\\ ****************** </h2>
       <div className="navbar-right">
         {user && <span className="user-role">Role: {user.role}</span>}
         {user && (

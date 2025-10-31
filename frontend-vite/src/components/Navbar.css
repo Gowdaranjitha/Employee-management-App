@@ -2,15 +2,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #273456, #524760);
+  background: linear-gradient(135deg, #a3aec9, #ffffff);
   padding: 7px 40px;
   color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-title {
-  font-size: 22px;
-  font-weight: 600;
+  padding-left: 375px; 
+  font-size: 19px;
+  font-weight: 700;
+   color: #1e0f0f;
 }
 
 .navbar-right {
