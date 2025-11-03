@@ -9,7 +9,7 @@ function RoleBasedRoute({ children, allowedRoles }) {
   }
 
   if (!allowedRoles.includes(user.role)) {
-    // redirect unauthorized users to dashboard
+    // Redirect unauthorized users to dashboard
     return <Navigate to="/dashboard" replace />;
   }
 

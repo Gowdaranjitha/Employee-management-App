@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ✅ use correct model + collection name
+// use correct model + collection name
 const User = mongoose.model("user", userSchema, "users");
 
 module.exports = User;

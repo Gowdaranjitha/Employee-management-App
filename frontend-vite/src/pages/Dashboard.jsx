@@ -17,8 +17,6 @@ function Dashboard() {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
-
-  // ✅ Normalize ID field
   const userId = user?._id || user?.id;
 
   useEffect(() => {
@@ -27,7 +25,7 @@ function Dashboard() {
     // eslint-disable-next-line
   }, []);
 
-  // ✅ Fetch users based on role
+  // Fetch users based on role
   const fetchUsers = async () => {
     try {
       if (user.role === "Admin" || user.role === "Manager") {
@@ -46,7 +44,7 @@ function Dashboard() {
     }
   };
 
-  // ✅ Delete user
+  // Delete user
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -55,7 +53,6 @@ function Dashboard() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Logout if deleting own account
       if (userId === id) {
         localStorage.clear();
         navigate("/login");
@@ -67,7 +64,7 @@ function Dashboard() {
     }
   };
 
-  // ✅ Edit setup
+  // Edit setup
   const handleEdit = (u) => {
     setEditingUser(u._id);
     setFormData({
@@ -78,7 +75,7 @@ function Dashboard() {
     });
   };
 
-  // ✅ Update user
+  // Update user
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -101,11 +98,6 @@ function Dashboard() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
-
   if (!user) return null;
 
   const isAdmin = user.role === "Admin";
@@ -116,36 +108,25 @@ function Dashboard() {
     <div
       className="dashboard-container"
       style={{
-        backgroundImage: `linear-gradient(135deg, rgba(58, 44, 97, 0.6), rgba(76,100,153,0.6)), url(${dashboardBg})`,
+        backgroundImage: `linear-gradient(135deg, rgba(58,44,97,0.6), rgba(76,100,153,0.6)), url(${dashboardBg})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       <div className="dashboard-overlay"></div>
 
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>DASHBOARD</h2>
-        <ul>
-          <li onClick={() => navigate("/dashboard")}>Home</li>
-          <li onClick={handleLogout}>Logout</li>
-        </ul>
-      </aside>
-
-      {/* Main Content */}
       <main className="dashboard-content">
         <div className="welcome-card">
           <h1>Welcome, {user.username} 👋</h1>
           <p>
             {isAdmin
-              ? "You have full control (View, Edit, Delete all users)"
+              ? "You have full control (View, Update, Delete all users)"
               : isManager
-              ? "You can view all users but edit/delete only your own profile"
-              : "You can view and edit your own details"}
+              ? "You can view all users but update/delete only your own profile"
+              : "You can view and update your own details"}
           </p>
         </div>
 
-        {/* Update Form */}
         {editingUser && (
           <div className="update-form">
             <h3>Update User</h3>
@@ -186,7 +167,9 @@ function Dashboard() {
                   }
                 />
               )}
-              <button type="submit" className="btn btn-update">Update</button>
+              <button type="submit" className="btn btn-update">
+                Update
+              </button>
               <button
                 type="button"
                 onClick={() => setEditingUser(null)}
@@ -199,7 +182,6 @@ function Dashboard() {
           </div>
         )}
 
-        {/* Users Table */}
         <div className="table-card">
           <table className="users-table">
             <thead>
@@ -224,10 +206,7 @@ function Dashboard() {
                 if (!canView) return null;
 
                 return (
-                  <tr
-                    key={u._id}
-                    className={userId === u._id ? "highlight" : ""}
-                  >
+                  <tr key={u._id}>
                     <td>{u._id}</td>
                     <td>{u.username}</td>
                     <td>{u.email}</td>

@@ -81,7 +81,7 @@ body, html {
 
 .login-box input:focus {
   background: #fff;
-  box-shadow: 0 0 6px #8e2de2;
+  box-shadow: 0 0 6px #2d75e2;
 }
 
 /* Login button */
@@ -115,7 +115,7 @@ body, html {
 .register-text {
   margin-top: 15px;
   font-size: 14px;
-  color: #f1f1f1;
+  color: #ffffff;
 }
 
 .link {

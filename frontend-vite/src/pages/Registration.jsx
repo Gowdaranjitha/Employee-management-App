@@ -19,18 +19,20 @@ function Registration() {
     setError("");
     setSuccess("");
 
+    // Simple validation
     if (!username || !password || !email || !department || !role) {
       setError("All fields are required");
       return;
     }
 
     try {
+      // POST to backend (make sure your backend has /users route)
       await API.post("/users", { username, password, email, department, role });
 
       setSuccess("Registration successful! Redirecting to Login...");
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Registration error:", err);
       setError(err.response?.data?.message || "Server error. Please try again.");
     }
   };

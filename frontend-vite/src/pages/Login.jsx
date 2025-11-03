@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; //  import context
 import API from "../api/axiosConfig";
 import loginBg from "../assets/loginbg.png";
 import "./Login.css";
@@ -9,6 +10,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth(); //use login from context
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,8 +25,8 @@ function Login() {
         return;
       }
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      // Use context to set auth and store locally
+      login(user, token);
 
       console.log("Login successful");
       navigate("/dashboard");

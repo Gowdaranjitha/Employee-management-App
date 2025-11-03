@@ -79,13 +79,13 @@ exports.getAllUsers = async (req, res) => {
     let users;
 
     if (role === "Admin") {
-      // ✅ Admin: Can view everyone
+      //  Admin: Can view everyone
       users = await User.find({}, "username email department role createdAt");
     } else if (role === "Manager") {
-      // ✅ Manager: Can view everyone (read-only)
+      //  Manager: Can view everyone (read-only)
       users = await User.find({}, "username email department role createdAt");
     } else if (role === "Employee") {
-      // ✅ Employee: Can view only self
+      //  Employee: Can view only self
       users = await User.find({ _id: id }, "username email department role createdAt");
     }
 

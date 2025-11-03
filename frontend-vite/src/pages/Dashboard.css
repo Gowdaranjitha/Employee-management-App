@@ -1,21 +1,19 @@
-/* --------------------------- 
+/* ---------------------------
    DASHBOARD PAGE - Deep Blue Glassmorphism (Matching Login)
    Elegant • Modern • Consistent Look
 ---------------------------- */
 
-/* Full-screen layout */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
   font-family: "Poppins", "Segoe UI", sans-serif;
   position: relative;
   overflow: hidden;
-  color: #e6f0ff;
-  background: linear-gradient(135deg, #29628a, #0b1d3d),
+  color: #a6b1c1;
+  background: linear-gradient(135deg, #ece6e6, #dee2e8),
               url("../assets/dashboardbg.png") center/cover no-repeat;
 }
 
-/* Subtle light overlay */
 .dashboard-overlay {
   position: absolute;
   inset: 0;
@@ -26,54 +24,7 @@
   z-index: 0;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(22px) saturate(160%);
-  padding: 45px 25px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0 25px 25px 0;
-  box-shadow: 8px 0 25px rgba(0, 0, 0, 0.35);
-  text-align: center;
-  transition: all 0.35s ease;
-}
-
-.sidebar h2 {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 45px;
-  color: #dbe9ff;
-  letter-spacing: 0.8px;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
-}
-
-/* Sidebar list */
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin: 16px 0;
-  padding: 12px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  color: #e8eefc;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.06);
-  transition: all 0.3s ease;
-}
-
-.sidebar ul li:hover {
-  background: linear-gradient(135deg, rgba(65, 139, 220, 0.25), rgba(28, 70, 120, 0.3));
-  transform: translateX(8px);
-  box-shadow: 0 8px 22px rgba(0, 114, 255, 0.15);
-  color: #ffffff;
-}
-
-/* Dashboard content */
+/* No Sidebar */
 .dashboard-content {
   flex: 1;
   padding: 60px 55px;
@@ -84,15 +35,15 @@
   z-index: 1;
 }
 
-/* Welcome card */
+/* Welcome Card */
 .welcome-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(219, 209, 209, 0.1);
   border-radius: 22px;
   padding: 45px;
   text-align: center;
   backdrop-filter: blur(22px) saturate(140%);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(81, 5, 5, 0.08);
   transition: all 0.3s ease;
 }
 
@@ -114,7 +65,7 @@
   opacity: 0.95;
 }
 
-/* Table card */
+/* Table Card */
 .table-card {
   background: rgba(255, 255, 255, 0.08);
   padding: 35px;
@@ -172,7 +123,7 @@
   transition: all 0.3s ease;
 }
 
-/* Update Button - soft blue accent */
+/* Update Button */
 .btn-update {
   background: linear-gradient(135deg, #4e9edb, #1b4f86);
   box-shadow: 0 4px 12px rgba(50, 120, 200, 0.25);
@@ -184,7 +135,7 @@
   box-shadow: 0 8px 16px rgba(60, 140, 230, 0.35);
 }
 
-/* Delete Button - deep red accent */
+/* Delete Button */
 .btn-delete {
   background: linear-gradient(135deg, #b63a3a, #5c2020);
   box-shadow: 0 4px 12px rgba(180, 50, 50, 0.25);
@@ -196,9 +147,10 @@
   box-shadow: 0 8px 16px rgba(200, 60, 60, 0.35);
 }
 
-/* Action buttons */
+/* ✅ Action buttons side by side */
 .action-buttons {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
@@ -209,12 +161,6 @@
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    border-radius: 0 0 20px 20px;
-    padding: 25px 18px;
   }
 
   .dashboard-content {
